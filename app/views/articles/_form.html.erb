@@ -1,0 +1,43 @@
+<div class="flex-container">
+  <div class="box"> 
+    <%= link_to "Back", root_path, class: 'btn btn-outline-success' %>
+  </div>
+
+  <div class="box"> 
+    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn btn-outline-success'  %> 
+  </div>
+ 
+</div>
+
+<div class="container custom">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="d-flex justify-content-center">
+        <div class="form-container">
+          <%= form_with model: article do |form| %>
+            <div class="mt-2">
+              <%= form.label :title, class: 'form-label' %><br>
+              <%= form.text_field :title, class: 'form-control', placeholder: "Title" %>
+              <% article.errors.full_messages_for(:title).each do |message| %>
+                <div class="error-message"><%= message %></div>
+              <% end %>
+            </div>
+
+            <div class="mt-4">
+              <%= form.label :Description, class: 'form-label' %><br>
+              <%= form.text_area :body, class: 'form-control', placeholder: "Tell your story..." , rows: 6 %>
+              <br>
+              <% article.errors.full_messages_for(:body).each do |message| %>
+                <div class="error-message"><%= message %></div>
+              <% end %>
+            </div>
+
+            <div>
+              <%= form.submit "Publish", class: "btn btn-outline-success" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

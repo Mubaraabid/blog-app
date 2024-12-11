@@ -1,0 +1,33 @@
+<% if user_signed_in? %> 
+ <%# <div> Welcome <%= current_user.email %>  
+ <%# </div>  %>
+<div class="container mt-3">
+<div class="d-flex bd-highlight mb-3">
+ <div class="me-auto p-2 bd-highlight"> <p>For you </p></div>
+ <div class="p-2 bd-highlight"> <%= link_to "Write", new_article_path, class: 'btn btn-outline-success'  %></div>
+  <div class="p-2"><%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn btn-outline-success'  %> </div>
+
+</div>
+</div>
+
+<div class="flex-container-card">
+
+  <% @articles.each do |article| %>
+<div class="card box" style="width: 18rem; height: 350px;">
+  <%= image_tag 'article01.jpg', alt: 'My Logo', class: "card-img-top" %>
+  <div class="card-body">
+    <h5 class="card-title"><%= truncate(article.title, length: 26) %></h5>
+    <p class="card-text"><%= truncate(article.body, length: 60)%></p>
+    <a class= "btn btn-outline-success" href="/articles/<%= article.id %>">Read</a>
+  </div>
+</div>
+  <% end %>
+
+</div>
+
+  
+<% else %>
+  <%= button_to "Sign in", new_user_session_path, class: 'btn btn-outline-success'  %> 
+<% end %>
+
+
