@@ -8,16 +8,14 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user 
-
     authorize @comment
 
     if @comment.save
-      redirect_to article_path(@commentable)
+      redirect_to article_path(@commentable), notice: 'Comment was successfully created.'
     else
       redirect_to article_path(@commentable), status: :unprocessable_entity
     end
   end
-
 
   def destroy
     @comment = Comment.find(params[:id])
@@ -26,7 +24,6 @@ class CommentsController < ApplicationController
 
     redirect_to article_path(@comment)
   end
-
 
   private
 
