@@ -13,6 +13,7 @@ gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
+
 gem 'pry', '~> 0.15.0'
 
 gem 'kaminari'
@@ -20,6 +21,7 @@ gem 'kaminari'
 gem 'cropper_rails', '~> 1.1', '>= 1.1.6'
 
 gem 'image_processing', '~> 1.2'
+
 gem 'mini_magick'
 
 gem 'tailwindcss-rails'
