@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-  patch 'croppable/:id', to: 'articles#croppable', as: 'croppable'
+  # patch 'croppable/:id', to: 'articles#croppable', as: 'croppable'
 
   resources :comments do
           resources :comments do
