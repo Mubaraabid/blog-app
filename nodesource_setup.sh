@@ -91,7 +91,7 @@ configure_repo() {
     echo "Pin: origin deb.nodesource.com" | tee -a /etc/apt/preferences.d/nodejs > /dev/null
     echo "Pin-Priority: 600" | tee -a /etc/apt/preferences.d/nodejs > /dev/null
 
-    # Run 'apt-get update'
+        # Run 'apt-get update'
     if ! apt-get update -y; then
         handle_error "$?" "Failed to run 'apt-get update'"
     else
