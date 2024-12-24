@@ -6,7 +6,6 @@ class LikesController < ApplicationController
 
     if @like.new_record?
       @like.save
-      @likeable.update_like_count
     end
 
     redirect_to @likeable
@@ -16,7 +15,6 @@ class LikesController < ApplicationController
     @like = @likeable.likes.find_by(id: params[:id], user: current_user)
     if @like
       @like.destroy
-      @likeable.update_like_count
     end
 
     redirect_to @likeable
