@@ -5,8 +5,4 @@ class Comment < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :likes, as: :likeable, dependent: :destroy
   belongs_to :user
-
-  def update_like_count
-    update_column(:likes_count, likes.count)
-  end
 end
