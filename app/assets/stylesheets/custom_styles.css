@@ -1,3 +1,37 @@
+.cropper-container {
+  max-width: 100%;
+}
+
+.preview-container {
+  max-width: 70%;
+  margin-top: 20px;
+  overflow: hidden;
+  width: 200px; 
+  height: 200px;
+}
+
+
+.image {
+  display: flex;
+  width: 300px;
+  height: 200px;
+  max-width: 100%;
+}
+
+.image-container {
+  width: 800px;
+  height: 200px;
+  margin-right: 30px;
+  max-width: 100%;
+}
+
+#source {
+  margin: 0 5px;
+}
+#output {
+  margin: 0 5px;
+}
+
 
 
 .container{

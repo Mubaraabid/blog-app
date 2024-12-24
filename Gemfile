@@ -15,6 +15,15 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem 'pry', '~> 0.15.0'
 
+gem 'kaminari'
+
+gem 'cropper_rails', '~> 1.1', '>= 1.1.6'
+
+gem 'image_processing', '~> 1.2'
+gem 'mini_magick'
+
+gem 'tailwindcss-rails'
+
 gem 'bootstrap', '~> 5.1.3'
 
 gem 'devise', '~> 4.9', '>= 4.9.3'
@@ -26,7 +35,11 @@ gem "importmap-rails"
 gem "turbo-rails"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails"
+# gem "stimulus-rails"
+
+# Gemfile
+gem 'stimulus-rails'
+
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
