@@ -2,11 +2,9 @@
   <div class="box"> 
     <%= link_to "Back", root_path, class: 'btn btn-outline-success' %>
   </div>
-
   <div class="box"> 
     <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn btn-outline-success'  %> 
   </div>
- 
 </div>
 
 <div class="container custom">
@@ -15,25 +13,45 @@
       <div class="d-flex justify-content-center">
         <div class="form-container">
           <%= form_with model: article do |form| %>
-            <div class="mt-2">
-              <%= form.label :title, class: 'form-label' %><br>
-              <%= form.text_field :title, class: 'form-control', placeholder: "Title" %>
-              <% article.errors.full_messages_for(:title).each do |message| %>
-                <div class="error-message"><%= message %></div>
-              <% end %>
-            </div>
+            <div data-controller="image-cropping" class="mt-2">
+              <div class="mt-2">
+                  <%= form.label :title, class: 'form-label' %><br>
+                  <%= form.text_field :title, class: 'form-control', placeholder: "Title" %>
+                  <% article.errors.full_messages_for(:title).each do |message| %>
+                  <div class="error-message"><%= message %></div>
+                  <% end %>
+              </div>
 
-            <div class="mt-4">
-              <%= form.label :Description, class: 'form-label' %><br>
-              <%= form.text_area :body, class: 'form-control', placeholder: "Tell your story..." , rows: 6 %>
-              <br>
-              <% article.errors.full_messages_for(:body).each do |message| %>
-                <div class="error-message"><%= message %></div>
-              <% end %>
-            </div>
+              <div class="mt-4">
+                  <%= form.label :Description, class: 'form-label' %><br>
+                  <%= form.text_area :body, class: 'form-control', placeholder: "Tell your story..." , rows: 6 %>
+                  <br>
+                  <% article.errors.full_messages_for(:body).each do |message| %>
+                  <div class="error-message"><%= message %></div>
+                  <% end %>
+              </div>
 
-            <div>
-              <%= form.submit "Publish", class: "btn btn-outline-success" %>
+                <div class="mt-4">
+                      <%= form.label :image, style: "display: block" %>
+                      <%= form.file_field :image, 
+                          data: { 
+                            image_cropping_target: "fileInput",
+                            action: "change->image-cropping#imageSelected"
+                          } %>
+                      
+                      <div class="mt-3 ">
+                        <%= image_tag "", 
+                            data: { image_cropping_target: "image" },
+                            style: "max-width: 100%; display: none;", class: "preview-container" %>
+                      </div>
+                      <%= form.hidden_field :crop_x, data: { image_cropping_target: "x" } %>
+                      <%= form.hidden_field :crop_y, data: { image_cropping_target: "y" } %>
+                      <%= form.hidden_field :crop_width, data: { image_cropping_target: "width" } %>
+                      <%= form.hidden_field :crop_height, data: { image_cropping_target: "height" } %>
+                    </div>
+              <div>
+                <%= form.submit "Save", class: "btn btn-outline-success mt-3" %>
+              </div>
             </div>
           <% end %>
         </div>
