@@ -39,8 +39,4 @@ class Article < ApplicationRecord
     temp_file.unlink
   end
 
-  def update_like_count
-    update_column(:likes_count, likes.count)
-  end
-
 end

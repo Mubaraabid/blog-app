@@ -23,7 +23,6 @@ class LikesController < ApplicationController
   end
 
   private
-
   def find_likeable
     if params[:article_id]
       @likeable = Article.find(params[:article_id])
@@ -31,12 +30,5 @@ class LikesController < ApplicationController
       @likeable = Comment.find(params[:comment_id])
     end
   end
+
 end
-
-
-
-
-
-
-
-
