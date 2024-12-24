@@ -1,0 +1,32 @@
+<%= turbo_stream.remove("article_placeholder") %>
+
+<%= turbo_stream.append("articlelist") do %>
+  <div class="flex-container-card">
+    <% @articles.each do |article| %>
+      <div class="card box" style="width: 18rem; height: 380px;">
+        <%=image_tag (article.image), alt: 'My Logo', class: "card-img-top", style: "width: 100%; height: 200px; object-fit: cover;" if  article.image.attached? %>
+        <div class="card-body">
+          <h5 class="card-title"><%= truncate(article.title, length: 26) %></h5>
+          <p class="card-text"><%= truncate(article.body, length: 60)%></p>
+          <a class= "btn btn-outline-success" href="/articles/<%= article.id %>"  data-turbo-frame="_top">Read</a>
+        </div>
+      </div>
+    <% end %>  
+  </div>
+<% end %>
+  
+<% if @articles.next_page %>
+  <%= turbo_stream.replace "articles_pagination" do %>
+    <%= turbo_frame_tag "articles_pagination", src: artlist_path(page: @articles.next_page), loading: :lazy do %>
+      <section class="bg-white dark:bg-gray-900" id="article_placeholder">
+          <div class="container px-6 py-10 mx-auto animate-pulse">
+              <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3">
+                <% for a in 1..8 do %>
+                   <%= render "article_placeholder" %> 
+                <% end %>
+              </div>
+           </div>
+     </section>
+    <% end %>
+  <% end %>  
+<% end %>

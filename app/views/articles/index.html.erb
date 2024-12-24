@@ -1,33 +1,40 @@
 <% if user_signed_in? %> 
- <%# <div> Welcome <%= current_user.email %>  
- <%# </div>  %>
+
 <div class="container mt-3">
-<div class="d-flex bd-highlight mb-3">
- <div class="me-auto p-2 bd-highlight"> <p>For you </p></div>
- <div class="p-2 bd-highlight"> <%= link_to "Write", new_article_path, class: 'btn btn-outline-success'  %></div>
-  <div class="p-2"><%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn btn-outline-success'  %> </div>
-
-</div>
-</div>
-
-<div class="flex-container-card">
-
-  <% @articles.each do |article| %>
-<div class="card box" style="width: 18rem; height: 350px;">
-  <%= image_tag 'article01.jpg', alt: 'My Logo', class: "card-img-top" %>
-  <div class="card-body">
-    <h5 class="card-title"><%= truncate(article.title, length: 26) %></h5>
-    <p class="card-text"><%= truncate(article.body, length: 60)%></p>
-    <a class= "btn btn-outline-success" href="/articles/<%= article.id %>">Read</a>
+    <div class="d-flex bd-highlight mb-3">
+     <div class="me-auto p-2 bd-highlight"> 
+      <p>For you </p>
+  </div>
+  <div class="p-2 bd-highlight"> 
+      <%= link_to "Write", new_article_path, class: 'btn btn-outline-success'  %>
+  </div>
+  <div class="p-2">
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn btn-outline-success'  %> 
   </div>
 </div>
-  <% end %>
-
 </div>
 
-  
-<% else %>
-  <%= button_to "Sign in", new_user_session_path, class: 'btn btn-outline-success'  %> 
+<%= turbo_frame_tag :articlelist, src: artlist_path(page: @articles.current_page), loading: :lazy do %>
+<section class="bg-white dark:bg-gray-900" id="article_placeholder">
+  <div class="container px-6 py-10 mx-auto animate-pulse">
+    <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3">
+     <% for a in 1..8 do %>
+     <%= render "article_placeholder" %> 
+     <% end %>
+ </div>
+</div>
+</section>
 <% end %>
 
+<%= turbo_frame_tag "articles_pagination" %> 
 
+<%#   <div class="d-flex justify-content-center mb-5">
+    <nav aria-label="Page navigation example">
+
+     <%= paginate @articles %>
+     <%# </nav> %>
+     <%# </div> %> %>
+     
+     <% else %>
+     <%= button_to "Sign in", new_user_session_path, class: 'btn btn-outline-success'  %> 
+     <% end %>
