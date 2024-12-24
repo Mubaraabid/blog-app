@@ -1,6 +1,13 @@
 class ArticlesController < ApplicationController
+  before_action :set_articles
+  
   def index
-    @articles = Article.all
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def artlist
   end
 
   def show
@@ -22,6 +29,10 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def preview
+  @article = Article.find(params[:id])
+  end
+
   def edit
     @article = Article.find(params[:id])
   end
@@ -29,8 +40,9 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
      authorize @article
+     
     if @article.update(article_params)
-      redirect_to @article
+     redirect_to @article
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,8 +56,17 @@ class ArticlesController < ApplicationController
     redirect_to root_path, status: :see_other
   end
 
+
   private
-    def article_params
-      params.require(:article).permit(:title, :body)
+    def set_article
+      @article = Article.find(params[:id])
     end
-end
+
+    def article_params
+      params.require(:article).permit(:title, :body, :image)
+    end
+
+    def set_articles
+      @articles = Article.order(created_at: :desc).page(params[:page])
+    end
+  end
