@@ -1,11 +1,8 @@
-
-
-
 <div class="container custom pt-5">
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
       <div class="d-flex justify-content-center">
-        <div class="form-container">
+        <div class="bg-white rounded-md shadow p-5 w-full">
           <h2 class="d-flex justify-content-center">Signup</h2>
             <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
               <%= render "users/shared/error_messages", resource: resource %>
@@ -29,7 +26,7 @@
           </div>
 
           <div class="actions mt-4 px-4">
-            <%= f.submit "Sign up", class: "btn btn-outline-success w-100" %>
+            <%= f.submit "Sign up", class: "rounded-md bg-green-100 text-decoration-none py-2 px-4 border border-transparent text-center text-white transition-all shadow-md hover:shadow-lg focus:bg-green-300 focus:shadow-none active:bg-green-300 hover:bg-green-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mt-2 text-sm w-100" %>
           </div>
           <% end %>
 

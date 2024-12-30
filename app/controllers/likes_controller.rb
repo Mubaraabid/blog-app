@@ -12,7 +12,7 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    @like = @likeable.likes.find_by(id: params[:id], user: current_user)
+    @like = @likeable.likes.find(id: params[:id], user: current_user)
     if @like
       @like.destroy
     end
@@ -21,6 +21,7 @@ class LikesController < ApplicationController
   end
 
   private
+  
   def find_likeable
     if params[:article_id]
       @likeable = Article.find(params[:article_id])
@@ -28,5 +29,4 @@ class LikesController < ApplicationController
       @likeable = Comment.find(params[:comment_id])
     end
   end
-
 end
