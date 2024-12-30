@@ -1,41 +1,38 @@
-<div class="flex-container">
-  <div class="box"> 
-    <%= link_to "Back", root_path, class: 'btn btn-outline-success' %>
-  </div>
-  <div class="box"> 
-    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn btn-outline-success'  %> 
-  </div>
-</div>
+<div class="bg-gray-700">
+  <div class="container py-5">
+    <div class="flex space-x-4 font-sans font-bold text-base  justify-content-end">
+        <%= link_to "Back", root_path, class: "text-decoration-none text-black " %> 
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'text-decoration-none text-black '  %> 
+    </div>
 
-<div class="container custom">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-6">
-      <div class="d-flex justify-content-center">
-        <div class="form-container">
-          <%= form_with model: article do |form| %>
-            <div data-controller="image-cropping" class="mt-2">
-              <div class="mt-2">
-                  <%= form.label :title, class: 'form-label' %><br>
-                  <%= form.text_field :title, class: 'form-control', placeholder: "Title" %>
-                  <% article.errors.full_messages_for(:title).each do |message| %>
-                  <div class="error-message"><%= message %></div>
-                  <% end %>
-              </div>
+    <div class="py-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+          <div class="d-flex justify-content-center">
+            <div class="bg-gray-600 rounded-md shadow-md p-5 w-full">
+              <%= form_with model: article do |form| %>
+                <div data-controller="image-cropping" class="mt-2">
+                  <div class="mt-2">
+                      <%= form.label :title, class: 'form-label text-base font-sans font-bold' %><br>
+                      <%= form.text_field :title, class: 'form-control', placeholder: "Title" %>
+                      <% article.errors.full_messages_for(:title).each do |message| %>
+                      <div class="error-message"><%= message %></div>
+                      <% end %>
+                  </div>
 
-              <div class="mt-4">
-                  <%= form.label :Description, class: 'form-label' %><br>
-                  <%= form.text_area :body, class: 'form-control', placeholder: "Tell your story..." , rows: 6 %>
-                  <br>
-                  <% article.errors.full_messages_for(:body).each do |message| %>
-                  <div class="error-message"><%= message %></div>
-                  <% end %>
-              </div>
+                  <div class="mt-4">
+                      <%= form.label :Description, class: 'form-label text-base font-sans font-bold' %><br>
+                      <%= form.text_area :body, class: 'form-control', placeholder: "Tell your story..." , rows: 6 %>
+                      <br>
+                      <% article.errors.full_messages_for(:body).each do |message| %>
+                      <div class="error-message"><%= message %></div>
+                      <% end %>
+                  </div>
 
-                <div class="mt-4">
-                      <%= form.label :image, style: "display: block" %>
+                    <div>
+                      <%= form.label :image, style: "display: block", class: 'text-base font-sans font-bold pb-2' %>
                       <%= form.file_field :image, 
                           data: { 
-                            image_cropping_target: "fileInput",
                             action: "change->image-cropping#imageSelected"
                           } %>
                       
@@ -49,13 +46,15 @@
                       <%= form.hidden_field :crop_width, data: { image_cropping_target: "width" } %>
                       <%= form.hidden_field :crop_height, data: { image_cropping_target: "height" } %>
                     </div>
-              <div>
-                <%= form.submit "Save", class: "btn btn-outline-success mt-3" %>
-              </div>
+                  <div class="flex justify-content-end">
+                    <%= form.submit "Publish", class: "rounded-md bg-green-100 text-decoration-none py-2 px-4 border border-transparent text-center text-base text-white transition-all shadow-md hover:shadow-lg focus:bg-green-300 focus:shadow-none active:bg-green-300 hover:bg-green-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mt-2 text-sm" %>
+                  </div>
+                </div>
+              <% end %>
             </div>
-          <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+</div>
 </div>

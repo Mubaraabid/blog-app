@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
     authorize @comment
 
     if @comment.save
-      redirect_to article_path(@commentable), notice: 'Comment was successfully created.'
+      redirect_to article_path(@commentable)
     else
       redirect_to article_path(@commentable), status: :unprocessable_entity
     end

@@ -1,4 +1,3 @@
-
 <div class="border-top mt-3">
     <div class="mt-2">
          <small class="small-text text-muted"><%= time_ago_in_words(comment.created_at) %> 
@@ -8,37 +7,36 @@
 
          <%= comment.body %>  
 
-         <div class="d-flex"> 
-              <%= button_to comment_comment_likes_path(comment.commentable, comment), method: :post, class: "btn" do %>
-              <%= image_tag "clap.svg", alt: "Edit", width: 15, height: 15 %>
-              <%= comment.likes.count %>
-              <% end %>
+        <div class="d-flex"> 
+          <%= button_to comment_comment_likes_path(comment.commentable, comment), method: :post, class: "btn" do %>
+            <%= image_tag "clap.svg", alt: "Edit", width: 15, height: 15 %>
+            <%= comment.likes.count %>
+          <% end %>
 
-              <%= link_to  @article, class: "btn"  do %>
-              <%= image_tag "message.svg", alt: "Reply", width: 15, height: 15 %>
-              <%= comment.comments.count %>
-              <% end %>
+          <%= link_to  @article, class: "btn"  do %>
+            <%= image_tag "message.svg", alt: "Reply", width: 15, height: 15 %>
+            <%= comment.comments.count %>
+          <% end %>
 
-              <%= link_to  comment_path(comment),class: "btn", data: {
-                      turbo_method: :delete,
-                      turbo_confirm: "Are you sure?"
-                    } do %>
-                    <%= image_tag "delete.svg", alt: "Delete", width: 15, height: 15 %>
-              <% end%>
-         </div>
+           <% if policy(comment).destroy? %>
+            <%= link_to  comment_path(comment),class: "btn", data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } do %>
+                  <%= image_tag "delete.svg", alt: "Delete", width: 15, height: 15 %>
+            <% end %>
+          <% end %>
+        </div>
 
-          <div class="form-container-nested-comment ">
-              <%= form_for [comment, Comment.new] do |f| %>
-              <%= f.text_area :body, placeholder: "Replying to...", class: "comment-body" %>
-            
-              <br/>
-
-              <div class=" d-flex justify-content-end mt-2 fs-1">
-                <%= f.submit "Respond", class: "btn btn-outline-success btn-sm" %>
-              </div>
-
-              <% end %>
-          </div>
+        <div class="comment-container">
+          <%= form_for [comment, Comment.new] do |f| %>
+            <%= f.text_area :body, placeholder: "Replying to...", class: "comment-body" %>
+            <br/>
+            <div class=" d-flex justify-content-end mt-2 fs-1">
+              <%= f.submit "Respond", class: "rounded-md bg-green-100 text-decoration-none py-2 px-4 border border-transparent text-center text-white transition-all shadow-md hover:shadow-lg focus:bg-green-300 focus:shadow-none active:bg-green-300 hover:bg-green-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mt-2 text-sm"%>
+            </div>
+          <% end %>
+        </div>
 
           <ul>
             <%= render comment.comments %>
