@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
-  before_action :set_articles
+  before_action :set_articles, only: [:index, :artlist]
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
   
   def index
     respond_to do |format|
@@ -11,12 +12,11 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @article = Article.find(params[:id])
-   
   end
 
   def new
     @article = Article.new
+     authorize @article
   end
 
   def create
@@ -29,17 +29,11 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def preview
-  @article = Article.find(params[:id])
-  end
-
   def edit
-    @article = Article.find(params[:id])
   end
 
   def update
-    @article = Article.find(params[:id])
-     authorize @article
+    authorize @article
      
     if @article.update(article_params)
      redirect_to @article
@@ -49,23 +43,21 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     authorize @article
     @article.destroy
 
     redirect_to root_path, status: :see_other
   end
 
-
   private
+    def article_params
+      params.require(:article).permit(:title, :body, :image, :crop_x, :crop_y, :crop_width, :crop_height)
+    end
+
     def set_article
       @article = Article.find(params[:id])
     end
-
-    def article_params
-      params.require(:article).permit(:title, :body, :image)
-    end
-
+    
     def set_articles
       @articles = Article.order(created_at: :desc).page(params[:page])
     end

@@ -8,21 +8,22 @@ class Article < ApplicationRecord
   has_one_attached :image
 
   attr_accessor :crop_x, :crop_y, :crop_width, :crop_height
- 
+
   after_commit :crop_image, if: :should_crop_image?
-  
+
   private
-  
+
   def should_crop_image?
-    image.attached? && crop_x.present? && crop_y.present? && 
-    crop_width.present? && crop_height.present?
+    image.attached? && crop_x.present? && crop_y.present? && crop_width.present? && crop_height.present? && !@image_processing
   end
-  
+
   def crop_image
     return unless image.attached?
 
-    blob = image.blob
+    @image_processing = true
 
+    blob = image.blob
+    
     image_path = ActiveStorage::Blob.service.send(:path_for, blob.key)
     processed_image = MiniMagick::Image.open(image_path)
     
@@ -34,9 +35,11 @@ class Article < ApplicationRecord
     image.attach(io: File.open(temp_file.path), 
                 filename: blob.filename, 
                 content_type: blob.content_type)
-    
+
     temp_file.close
     temp_file.unlink
+
+    @image_processing = false
   end
 
 end

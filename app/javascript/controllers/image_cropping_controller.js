@@ -2,11 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import Cropper from 'cropperjs'
 
 export default class extends Controller {
-  static targets = ["image", "fileInput", "x", "y", "width", "height"]
-
-  connect() {
-    console.log("image cropping controller connected")
-  }
+  static targets = ["image", "x", "y", "width", "height"]
 
   imageSelected(event) {
     const file = event.target.files[0]
@@ -39,12 +35,5 @@ export default class extends Controller {
         this.heightTarget.value = Math.round(data.height)
       }
     })
-  }
-
-  disconnect() {
-    if (this.cropper) {
-      console.log("controller disconnected")
-      this.cropper.destroy()
-    }
   }
 }
