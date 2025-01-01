@@ -1,23 +1,15 @@
 class LikesController < ApplicationController
-  before_action :find_likeable, only: [:create, :destroy]
+  before_action :find_likeable, only: [:create]
 
   def create
     @like = @likeable.likes.find_or_initialize_by(user: current_user)
-
     if @like.new_record?
       @like.save
     end
 
-    redirect_to @likeable
-  end
-
-  def destroy
-    @like = @likeable.likes.find(id: params[:id], user: current_user)
-    if @like
-      @like.destroy
+    respond_to do |format|
+      format.turbo_stream
     end
-
-    redirect_to @likeable
   end
 
   private
