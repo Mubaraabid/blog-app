@@ -1,41 +1,33 @@
 <% if user_signed_in? %> 
-<div class="container py-5 ">
-  <div class="d-flex justify-between pb-5">
-    <div class="flex space-x-4 px-2 font-sans font-bold text-base pt-2"> 
-      <%= link_to "Home", root_path, class: "text-decoration-none text-black" %>
-      <p> About Us </p>
+    <div class="container py-5 ">
+        <div class="d-flex justify-between pb-5">
+            <div class="flex space-x-4 px-2 font-sans font-bold text-base pt-2"> 
+                <%= link_to "Home", root_path, class: "text-decoration-none text-black" %>
+                <p> About Us </p>
+            </div>
+            <div>
+                <p class="text-3xl font-bold text-green-100">Bloggy</p>
+            </div>
+            <div class="flex space-x-4 px-2 font-sans font-bold text-base pt-2 "> 
+                <%= link_to "Write", new_article_path, class: "text-decoration-none text-black" %>
+                <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+            </div>
+        </div>
+
+        <%= turbo_frame_tag :articlelist, src: artlist_path(page: @articles.current_page), loading: :lazy do %>
+            <section class="bg-white dark:bg-gray-900" id="article_placeholder">
+                <div class="container px-6 py-10 mx-auto animate-pulse">
+                    <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3">
+                        <% for a in 1..8 do %>
+                        <%= render "article_placeholder" %> 
+                        <% end %>
+                    </div>
+                </div>
+            </section>
+        <% end %>
+
+        <%= turbo_frame_tag "articles_pagination" %> 
     </div>
-    <div>
-      <p class="text-3xl font-bold text-green-100">Bloggy</p>
-    </div>
-
-    <div class="flex space-x-4 px-2 font-sans font-bold text-base pt-2 "> 
-       <%= link_to "Write", new_article_path, class: "text-decoration-none text-black" %>
-       <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
-    </div>
-  </div>
-
-<%= turbo_frame_tag :articlelist, src: artlist_path(page: @articles.current_page), loading: :lazy do %>
-  <section class="bg-white dark:bg-gray-900" id="article_placeholder">
-    <div class="container px-6 py-10 mx-auto animate-pulse">
-      <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3">
-       <% for a in 1..8 do %>
-       <%= render "article_placeholder" %> 
-       <% end %>
-     </div>
-    </div>
-  </section>
-<% end %>
-
-<%= turbo_frame_tag "articles_pagination" %> 
-
-<%#   <div class="d-flex justify-content-center mb-5">
-    <nav aria-label="Page navigation example">
-
-     <%= paginate @articles %>
-     <%# </nav> %>
-     <%# </div> %> 
-</div>
 <% else %>
 <%= button_to "Sign in", new_user_session_path, class: 'btn btn-outline-success'  %> 
 <% end %>

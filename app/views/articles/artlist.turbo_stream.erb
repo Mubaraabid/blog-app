@@ -3,25 +3,25 @@
 <%= turbo_stream.append("articlelist") do %>
   <div class=" container flex flex-wrap gap-6 pb-4 justify-center">
     <% @articles.each do |article| %>
-    <div class="cursor-pointer group relative flex flex-col  bg-white shadow-sm border border-slate-200 rounded-lg w-72 hover:shadow-lg transition-shadow duration-300">
-      <div class="relative h-56 mx-2.5 mt-2.5 mb-0 overflow-hidden text-white rounded-md">
-        <%=image_tag (article.image), alt: 'My Logo', class:"transition-transform duration-500 ease-[cubic-bezier(0.25, 1, 0.5, 1)] transform group-hover:scale-110" if  article.image.attached? %>
-      </div>
-      <div class="px-4 pb-5 -mt-10">
-        <h6 class="mb-2 text-slate-800 text-xl font-semibold">
-         <%= truncate(article.title, length: 26) %>
-        </h6>
-        <p class="text-slate-600 leading-normal break-words font-light">
-          <%= truncate(article.body, length: 60)%>
-        </p>
-      </div>
-      <div class="absolute bottom-0 left-0 right-0 px-4 pb-4">
-        <a class="rounded-md bg-green-100 text-decoration-none py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-300 focus:shadow-none active:bg-green-300 hover:bg-green-300 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" href="/articles/<%= article.id %>"  data-turbo-frame="_top">
-          Read article
-        </a>
-      </div>
-    </div> 
-   <% end %>  
+      <div class="cursor-pointer group relative flex flex-col bg-white shadow-sm border border-slate-200 rounded-lg w-72 hover:shadow-lg transition-shadow duration-300">
+        <div class="relative h-56 mx-2.5 mt-2.5 mb-0 overflow-hidden text-white rounded-md">
+          <%=image_tag (article.image), alt: 'My Logo', class:"transition-transform duration-500 ease-[cubic-bezier(0.25, 1, 0.5, 1)] transform group-hover:scale-110" if  article.image.attached? %>
+        </div>
+        <div class="px-4 pb-5 -mt-10">
+          <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+           <%= truncate(article.title, length: 26) %>
+          </h6>
+          <p class="text-slate-600 leading-normal break-words font-light">
+            <%= truncate(article.body, length: 60)%>
+          </p>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 px-4 pb-4">
+          <a class="rounded-md bg-green-100 text-decoration-none py-2 px-4 text-center text-white hover:bg-green-300 mt-2 text-sm shadow-md" href="/articles/<%= article.id %>"  data-turbo-frame="_top">
+            Read article
+          </a>
+        </div>
+      </div> 
+    <% end %>  
   </div>
 <% end %>
 
@@ -35,8 +35,8 @@
                    <%= render "article_placeholder" %> 
                 <% end %>
               </div>
-           </div>
-     </section>
+          </div>
+      </section>
     <% end %>
   <% end %>  
 <% end %>

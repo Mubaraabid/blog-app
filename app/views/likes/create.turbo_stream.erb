@@ -1,0 +1,4 @@
+<%= turbo_stream.replace "clap-#{@likeable.id}" do %>
+    <%= image_tag "clap-filled.svg", alt: "Edit", width: 20, height: 20 %>
+    <span><%= @likeable.likes.count %></span>
+<% end %>
