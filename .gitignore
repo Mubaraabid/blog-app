@@ -36,3 +36,39 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+# Ignore application configuration
+/node_modules
+/.ruby-env
+/.byebug_history
+/.redev.yml
+Procfile
+.idea
+.nova
+/config/credentials/development.key
+/config/credentials/staging.key
+/config/credentials/production.key
+/config/credentials/test.key
+
+/public/packs
+/public/packs-test
+/public/assets
+
+/storage/*
+!/storage/.keep
+/public/uploads
+
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
+**/.DS_Store
+.devcontainer/.env
