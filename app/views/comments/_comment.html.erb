@@ -1,51 +1,52 @@
 <div class="border-top mt-3">
-    <div class="mt-2">
-        <small class="small-text text-muted"><%= time_ago_in_words(comment.created_at) %> 
-        ago
-        </small>
-        <br/>
+  <div class="mt-2">
+    <small class="small-text text-muted"><%= time_ago_in_words(comment.created_at) %>
+      ago
+    </small>
+    <br>
 
-        <%= comment.body %>  
+    <%= comment.body %>
 
-        <div class="d-flex"> 
-            <%= button_to comment_comment_likes_path(comment.commentable, comment), method: :post, class: "btn" do %>
-                <%= turbo_frame_tag "clap-#{comment.id}" do %>
-                    <% if comment.likes.exists?(user_id: current_user.id) %>
-                        <%= image_tag "clap-filled.svg", alt: "liked", width: 20, height: 20 %>
-                    <% else %>
-                        <%= image_tag "clap.svg", alt: "not-liked", width: 20, height: 20 %>
-                    <% end %>
-                    <%= comment.likes.count %>
-                <% end %> 
-            <% end %>
+    <div class="d-flex">
+      <%= button_to comment_comment_likes_path(comment.commentable, comment), method: :post, class: "btn" do %>
+        <%= turbo_frame_tag "clap-#{comment.id}" do %>
+          <% if comment.likes.exists?(user_id: current_user.id) %>
+            <%= image_tag "clap-filled.svg", alt: "liked", width: 20, height: 20 %>
+          <% else %>
+            <%= image_tag "clap.svg", alt: "not-liked", width: 20, height: 20 %>
+          <% end %>
+          <%= comment.likes.count %>
+        <% end %>
+      <% end %>
 
-            <%= link_to  @article, class: "btn"  do %>
-                  <%= image_tag "message.svg", alt: "reply", width: 20, height: 20 %>
-                  <%= comment.comments.count %>
-            <% end %>
+      <%= link_to  @article, class: "btn"  do %>
+        <%= image_tag "message.svg", alt: "reply", width: 20, height: 20 %>
+        <%= comment.comments.count %>
+      <% end %>
 
-            <% if policy(comment).destroy? %>
-              <%= link_to  comment_path(comment),class: "btn", data: {
-                      turbo_method: :delete,
-                      turbo_confirm: "Are you sure?"
-                    } do %>
-                      <%= image_tag "delete.svg", alt: "Delete", width: 20, height: 20 %>
-              <% end %>
-            <% end %>
-        </div>
-
-        <div class="comment-container">
-            <%= form_with model: [comment, Comment.new] do |f| %>
-              <%= f.text_area :body, placeholder: "Replying to...", class: "comment-body" %>
-              <br/>
-              <div class=" d-flex justify-content-end mt-2 fs-1">
-                <%= f.submit "Respond", class: "rounded-md bg-green-100 text-decoration-none py-2 px-4 text-center text-white hover:bg-green-300 mt-2 text-sm shadow-md"%>
-              </div>
-            <% end %>
-        </div>
-
-        <ul>
-            <%= render comment.comments %>
-        </ul>
+      <% if policy(comment).destroy? %>
+        <%= link_to  comment_path(comment, article_id: @article.id),class: "btn", data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+          } do %>
+            <%= image_tag "delete.svg", alt: "Delete", width: 20, height: 20 %>
+        <% end %>
+      <% end %>
     </div>
-</div> 
+
+    <div class="comment-container">
+      <%= form_with model: [comment, Comment.new] do |f| %>
+        <%= f.text_area :body, placeholder: "Replying to...", class: "comment-body" %>
+        <%= f.hidden_field :articles_id, value: @article.id %>
+        <br>
+        <div class=" d-flex justify-content-end mt-2 fs-1">
+          <%= f.submit "Respond", class: "rounded-md bg-green-100 text-decoration-none py-2 px-4 text-center text-white hover:bg-green-300 mt-2 text-sm shadow-md" %>
+        </div>
+      <% end %>
+    </div>
+
+    <ul>
+      <%= render comment.comments %>
+    </ul>
+  </div>
+</div>

@@ -1,80 +1,85 @@
-<% if user_signed_in? %> 
+<% if user_signed_in? %>
 
 <div class="container py-5">
-   <div class="d-flex justify-between mb-3">
-        <div>
-         <%= link_to "Back", root_path, class: "font-sans font-bold text-base text-decoration-none text-black" %>
-        </div>
-
-        <div class="flex justify-content-end ">
-            <% if policy(@article).update? %>
-                <%= link_to edit_article_path(@article), class: "btn" do %>
-                    <%= image_tag "edit.svg", alt: "Edit", width: 25, height: 25 %>
-                <% end %>
-            <% end %>
-
-            <% if policy(@article).destroy? %>
-                <%= link_to  article_path(@article),class: "btn", data: {
-                  turbo_method: :delete,
-                  turbo_confirm: "Are you sure?"
-              } do %>
-                    <%= image_tag "delete.svg", alt: "Delete", width: 25, height: 25 %>
-                <% end%> 
-            <% end %>               
-        </div>
-    </div>
-
+  <div class="d-flex justify-between mb-3">
     <div>
-        <div class="d-flex justify-content-center px-5 pt-5">
-            <div>
-                <h1 class="px-5 flex items-center"><%= @article.title %></h1>
-                <small class="text-sm text-muted px-5"><%= time_ago_in_words(@article.created_at) %> ago</small> 
-            </div>
-            <%=image_tag (@article.image), alt: 'My Logo', width: 500, height: 500, class: "rounded-lg" %>
-        </div>
-        <div class="px-5">
-            <p class="text-xl d-flex justify-content-center pt-5 "><%= @article.body %></p>
-            <div class="d-flex mb-3 border-top border-bottom">
-                <div class="p-2"> 
-                    <%= button_to article_likes_path(@article), class: "btn" do %>
-                        <%= turbo_frame_tag "clap-#{@article.id}" do %>
-                        <% if @article.likes.exists?(user_id: current_user.id) %>
-                            <%= image_tag "clap-filled.svg", alt: "Liked", width: 20, height: 20 %>
-                        <% else %>
-                            <%= image_tag "clap.svg", alt: "Clap", width: 20, height: 20 %>
-                        <% end %>
-                        <%= @article.likes.count %>
-                        <% end %>
-                    <% end %>
-                </div>
-
-                <div class="p-2">
-                    <%= link_to  @article, class: "btn"  do %>
-                        <%= image_tag "message.svg", alt: "Reply", width: 20, height: 20 %>
-                        <%= @article.comments.count %>
-                    <% end %>
-                </div> 
-            </div>
-
-            <div class="pt-3">
-                <ul>
-                    <h6>Responses(<%= @article.comments.count %>)</h6>
-                    <div class="comment-container">
-                        <%= form_with model: [@article, Comment.new] do |f| %>
-                            <%= f.text_area :body, placeholder: "What are your thoughts?", class: "comment-body" %><br/>
-                            <div class="d-flex justify-content-end mt-2">
-                                <%= f.submit "Respond", class: "rounded-md bg-green-100 text-decoration-none py-2 px-4 text-center text-white hover:bg-green-300 mt-2 text-sm shadow-md" %>
-                            </div>
-                        <% end %>
-                    </div>
-                    <ul>
-                        <%= render @article.comments, article:@article%>
-                    </ul>
-                </ul>
-            </div>    
-        </div>
+     <%= link_to "Back", root_path, class: "font-sans font-bold text-base text-decoration-none text-black" %>
     </div>
+
+    <div class="flex justify-content-end">
+      <% if policy(@article).update? %>
+        <%= link_to edit_article_path(@article), class: "btn" do %>
+            <%= image_tag "edit.svg", alt: "Edit", width: 25, height: 25 %>
+        <% end %>
+      <% end %>
+
+      <% if policy(@article).destroy? %>
+        <%= link_to  article_path(@article),class: "btn", data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        } do %>
+          <%= image_tag "delete.svg", alt: "Delete", width: 25, height: 25 %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div>
+    <div class="d-flex justify-content-center px-5 pt-5">
+      <div>
+        <h1 class="px-5 flex items-center"><%= @article.title %></h1>
+        <small class="text-sm text-muted px-5"><%= time_ago_in_words(@article.created_at) %> ago</small>
+      </div>
+      <%= image_tag (@article.image), alt: 'My Logo', width: 500, height: 500, class: "rounded-lg" %>
+    </div>
+
+    <%= turbo_frame_tag "comment" do %>
+      <div class="px-5">
+        <p class="text-xl d-flex justify-content-center pt-5"><%= @article.body %></p>
+
+        <div class="d-flex mb-3 border-top border-bottom">
+          <div class="p-2">
+            <%= button_to article_likes_path(@article), class: "btn" do %>
+              <%= turbo_frame_tag "clap-#{@article.id}" do %>
+              <% if @article.likes.exists?(user_id: current_user.id) %>
+                  <%= image_tag "clap-filled.svg", alt: "Liked", width: 20, height: 20 %>
+              <% else %>
+                  <%= image_tag "clap.svg", alt: "Clap", width: 20, height: 20 %>
+              <% end %>
+              <%= @article.likes.count %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="p-2">
+            <%= link_to  @article, class: "btn"  do %>
+              <%= image_tag "message.svg", alt: "Reply", width: 20, height: 20 %>
+              <%= @article.comments.count %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="pt-3">
+          <ul>
+            <h6>Responses(<%= @article.comments.count %>)</h6>
+            <div class="comment-container">
+              <%= form_with model: [@article, Comment.new] do |f| %>
+                <%= f.text_area :body, placeholder: "What are your thoughts?", class: "comment-body" %><br>
+                <%= f.hidden_field :articles_id, value: @article.id %>
+                  <div class="d-flex justify-content-end mt-2">
+                    <%= f.submit "Respond", class: "rounded-md bg-green-100 text-decoration-none py-2 px-4 text-center text-white hover:bg-green-300 mt-2 text-sm shadow-md" %>
+                  </div>
+              <% end %>
+            </div>
+            <ul>
+              <%= render @article.comments, article:@article %>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 <% else %>
-<%= button_to "Sign in", new_user_session_path %> 
+<%= button_to "Sign in", new_user_session_path %>
 <% end %>

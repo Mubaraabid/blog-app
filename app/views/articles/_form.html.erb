@@ -1,8 +1,8 @@
 <div class="bg-gray-700">
   <div class="container py-5">
     <div class="flex space-x-4 font-sans font-bold text-base  justify-content-end">
-        <%= link_to "Back", root_path, class: "text-decoration-none text-black " %> 
-        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'text-decoration-none text-black '  %> 
+      <%= link_to "Back", root_path, class: "text-decoration-none text-black " %>
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'text-decoration-none text-black' %>
     </div>
 
     <div class="py-5">
@@ -13,41 +13,42 @@
               <%= form_with model: article do |form| %>
                 <div data-controller="image-cropping" class="mt-2">
                   <div class="mt-2">
-                      <%= form.label :title, class: 'form-label text-base font-sans font-bold' %><br>
-                      <%= form.text_field :title, class: 'form-control', placeholder: "Title" %>
-                      <% article.errors.full_messages_for(:title).each do |message| %>
-                        <div class="error-message"><%= message %></div>
-                      <% end %>
+                    <%= form.label :title, class: 'form-label text-base font-sans font-bold' %><br>
+                    <%= form.text_field :title, class: 'form-control', placeholder: "Title" %>
+                    <% article.errors.full_messages_for(:title).each do |message| %>
+                      <div class="error-message"><%= message %></div>
+                    <% end %>
                   </div>
 
                   <div class="mt-4">
-                      <%= form.label :Description, class: 'form-label text-base font-sans font-bold' %><br>
-                      <%= form.text_area :body, class: 'form-control', placeholder: "Tell your story..." , rows: 6 %>
-                      <br>
-                      <% article.errors.full_messages_for(:body).each do |message| %>
-                        <div class="error-message"><%= message %></div>
-                      <% end %>
+                    <%= form.label :Description, class: 'form-label text-base font-sans font-bold' %><br>
+                    <%= form.text_area :body, class: 'form-control', placeholder: "Tell your story..." , rows: 6 %>
+                    <br>
+                    <% article.errors.full_messages_for(:body).each do |message| %>
+                      <div class="error-message"><%= message %></div>
+                    <% end %>
                   </div>
 
                   <div>
-                      <%= form.label :image, style: "display: block", class: 'text-base font-sans font-bold pb-2' %>
-                      <%= form.file_field :image, 
-                          data: { 
-                            action: "change->image-cropping#imageSelected"
-                          } %>
-                      
-                      <div class="mt-3 ">
-                          <%= image_tag "", 
-                              data: { image_cropping_target: "image" },
-                              style: "max-width: 100%; display: none;", class: "preview-container" %>
-                      </div>
-                          <%= form.hidden_field :crop_x, data: { image_cropping_target: "x" } %>
-                          <%= form.hidden_field :crop_y, data: { image_cropping_target: "y" } %>
-                          <%= form.hidden_field :crop_width, data: { image_cropping_target: "width" } %>
-                          <%= form.hidden_field :crop_height, data: { image_cropping_target: "height" } %>
+                    <%= form.label :image, style: "display: block", class: 'text-base font-sans font-bold pb-2' %>
+                    <%= form.file_field :image,
+                      data: {
+                        action: "change->image-cropping#imageSelected"
+                      } %>
+
+                    <div class="mt-3 ">
+                      <%= image_tag "",
+                        data: { image_cropping_target: "image" },
+                        style: "max-width: 100%; display: none;", class: "preview-container" %>
+                    </div>
+                    <%= form.hidden_field :crop_x, data: { image_cropping_target: "x" } %>
+                    <%= form.hidden_field :crop_y, data: { image_cropping_target: "y" } %>
+                    <%= form.hidden_field :crop_width, data: { image_cropping_target: "width" } %>
+                    <%= form.hidden_field :crop_height, data: { image_cropping_target: "height" } %>
                   </div>
+
                   <div class="flex justify-content-end">
-                      <%= form.submit "Publish", class: "rounded-md bg-green-100 text-decoration-none py-2 px-4 text-center text-white hover:bg-green-300 mt-2 text-sm shadow-md" %>
+                    <%= form.submit "Publish", class: "rounded-md bg-green-100 text-decoration-none py-2 px-4 text-center text-white hover:bg-green-300 mt-2 text-sm shadow-md" %>
                   </div>
                 </div>
               <% end %>
