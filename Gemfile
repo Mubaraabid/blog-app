@@ -24,6 +24,9 @@ gem 'image_processing', '~> 1.2'
 
 gem 'mini_magick'
 
+gem 'rubocop', '~> 1.69', require: false
+
+gem 'erb_lint', require: false
 
 gem 'tailwindcss-rails'
 

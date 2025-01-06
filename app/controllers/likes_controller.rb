@@ -3,9 +3,7 @@ class LikesController < ApplicationController
 
   def create
     @like = @likeable.likes.find_or_initialize_by(user: current_user)
-    if @like.new_record?
-      @like.save
-    end
+    @like.save if @like.new_record?
 
     respond_to do |format|
       format.turbo_stream
@@ -13,7 +11,7 @@ class LikesController < ApplicationController
   end
 
   private
-  
+
   def find_likeable
     if params[:article_id]
       @likeable = Article.find(params[:article_id])
